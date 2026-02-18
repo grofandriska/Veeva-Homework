@@ -1,0 +1,8 @@
+spring.application.name=veeva
+
+spring.cache.type=simple
+
+auth.username=username
+auth.password=password
+auth.url=url
+vault.url=url
