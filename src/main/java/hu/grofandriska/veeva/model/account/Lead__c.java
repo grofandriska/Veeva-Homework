@@ -11,7 +11,6 @@ public class Lead__c {
     private String first_name__c;
     @NotBlank
     private String last_name__c;
-
     @NotBlank
     @Email
     @NotEmpty

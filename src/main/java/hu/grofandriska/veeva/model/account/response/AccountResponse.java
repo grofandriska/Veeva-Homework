@@ -6,8 +6,6 @@ import java.util.List;
 
 @Data
 public class AccountResponse {
-
-
     private String responseStatus;
     private QueryDescribe queryDescribe;
     private ResponseDetails responseDetails;
