@@ -1,7 +1,7 @@
 package hu.grofandriska.veeva.service;
 
-import hu.grofandriska.veeva.model.vault.VaultAuthResponse;
-import hu.grofandriska.veeva.model.vault.VaultQueryResponse;
+import hu.grofandriska.veeva.model.account.response.AccountResponse;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class AccountService {
@@ -25,7 +25,7 @@ public class AccountService {
         this.URL = URL;
     }
 
-    public String findEmail(String emailAddress, String sessionId) {
+    public AccountResponse findEmail(String emailAddress, String sessionId) {
         HttpHeaders headers = new HttpHeaders();
 
         headers.set("Authorization", sessionId);
@@ -35,29 +35,18 @@ public class AccountService {
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         System.out.println(emailAddress);
-        String SQL = "Select email_cda__v,id from account__v WHERE email_cda__v ='" + emailAddress+"'";
+        String SQL = "Select email_cda__v,id from account__v WHERE email_cda__v ='" + emailAddress + "'";
         body.add("q", SQL);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(URL, request, String.class);
-        System.out.println(response.getBody());
-        /*VaultQueryResponse vaultResponse = response.getBody();
-        System.out.println(vaultResponse);
 
-        if (vaultResponse != null) {
-            if (validateEmail(vaultResponse,emailAddress)){
-                return true;
-            }
-            else return false;
-        }*/
-        return response.getBody();
+        ObjectMapper mapper = new ObjectMapper();
+        AccountResponse accountResponse = mapper.readValue(response.getBody(), AccountResponse.class);
+        System.out.println("RAW RESPONSE BODY: " + response.getBody());
+        System.out.println("--------------------");
+
+        return accountResponse;
     }
-
-    private boolean validateEmail(VaultQueryResponse vaultResponse, String targetEmail) {
-        return vaultResponse.getData().stream()
-                .filter(account -> account.getEmail_cda__v() != null)
-                .anyMatch(account -> account.getEmail_cda__v().equalsIgnoreCase(targetEmail));
-    }
-
 }
