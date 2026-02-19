@@ -11,4 +11,5 @@ public class VaultAuthResponse {
     private String sessionId;
     private String responseStatus;
     private List <Vault> vaultIds;
+    private String vaultId;
 }

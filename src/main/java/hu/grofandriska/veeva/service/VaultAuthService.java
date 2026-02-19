@@ -31,7 +31,7 @@ public class VaultAuthService {
     }
 
     @Cacheable(value = "vaultSession", sync = true)
-    public String getSessionId() {
+    public VaultAuthResponse getSessionId() {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -44,12 +44,13 @@ public class VaultAuthService {
 
             VaultAuthResponse responseBody = response.getBody();
 
+
             if (response.getStatusCode() == HttpStatus.OK && responseBody != null && responseBody.getSessionId() != null ) {
-                return responseBody.getSessionId();
+                return responseBody;
             } else {
                 throw new RuntimeException("Vault auth failed: " + response.getStatusCode());
             }
-        } catch (Exception e ) {
+        } catch (Exception e) {
             throw new RuntimeException("Vault auth request failed", e);
         }
     }
