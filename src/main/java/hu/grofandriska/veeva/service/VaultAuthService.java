@@ -31,7 +31,7 @@ public class VaultAuthService {
     }
 
     @Cacheable(value = "vaultSession", sync = true)
-    public VaultAuthResponse getSessionId() {
+    public VaultAuthResponse authenticate() {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

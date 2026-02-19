@@ -30,6 +30,7 @@ public class AccountService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", sessionId);
+        headers.set("Bearer", sessionId);
         headers.set("X-VaultAPI-DescribeQuery", "true");
         headers.setAccept((List.of(MediaType.APPLICATION_JSON)));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
