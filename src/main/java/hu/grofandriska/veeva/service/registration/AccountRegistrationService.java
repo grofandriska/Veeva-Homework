@@ -40,7 +40,7 @@ public class AccountRegistrationService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(URL, request, String.class);
-
+        System.out.println(response);
         ObjectMapper mapper = new ObjectMapper();;
         return mapper.readValue(response.getBody(), RegistrationServerResponse.class);
     }
