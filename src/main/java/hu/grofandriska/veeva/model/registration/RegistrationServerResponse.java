@@ -3,6 +3,7 @@ package hu.grofandriska.veeva.model.registration;
 import hu.grofandriska.veeva.model.account.AccountData;
 import hu.grofandriska.veeva.model.registration.responsefields.QueryDescribe;
 import hu.grofandriska.veeva.model.registration.responsefields.ResponseDetails;
+import hu.grofandriska.veeva.model.registration.responsefields.Warning;
 import lombok.Data;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public class RegistrationServerResponse {
     private QueryDescribe queryDescribe;
     private ResponseDetails responseDetails;
     private List<AccountData> data;
+    private List<Warning> warnings;
 }
