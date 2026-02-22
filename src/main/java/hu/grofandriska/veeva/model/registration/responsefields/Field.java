@@ -1,4 +1,4 @@
-package hu.grofandriska.veeva.model.account.response;
+package hu.grofandriska.veeva.model.registration.responsefields;
 
 import lombok.Data;
 
@@ -6,7 +6,6 @@ import java.util.List;
 
 @Data
 public class Field {
-
     private String label;
     private String type;
     private boolean required;
@@ -16,5 +15,4 @@ public class Field {
     private boolean encrypted;
     private Integer max_length;
     private String format_mask;
-
 }

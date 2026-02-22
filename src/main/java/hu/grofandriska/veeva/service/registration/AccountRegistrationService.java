@@ -1,6 +1,6 @@
-package hu.grofandriska.veeva.service;
+package hu.grofandriska.veeva.service.registration;
 
-import hu.grofandriska.veeva.model.account.response.AccountResponse;
+import hu.grofandriska.veeva.model.registration.RegistrationServerResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -16,18 +16,17 @@ import tools.jackson.databind.ObjectMapper;
 import java.util.List;
 
 @Service
-public class AccountService {
+public class AccountRegistrationService {
     private final String URL;
     private final RestTemplate restTemplate;
 
-    public AccountService(RestTemplate restTemplate,
-                          @Value("${vql.url}") String URL) {
+    public AccountRegistrationService(RestTemplate restTemplate,
+                                      @Value("${vql.url}") String URL) {
         this.restTemplate = restTemplate;
         this.URL = URL;
     }
 
-    public AccountResponse findEmail(String emailAddress, String sessionId) {
-
+    public RegistrationServerResponse findEmail(String emailAddress, String sessionId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", sessionId);
         headers.set("Bearer", sessionId);
@@ -43,6 +42,6 @@ public class AccountService {
         ResponseEntity<String> response = restTemplate.postForEntity(URL, request, String.class);
 
         ObjectMapper mapper = new ObjectMapper();;
-        return mapper.readValue(response.getBody(), AccountResponse.class);
+        return mapper.readValue(response.getBody(), RegistrationServerResponse.class);
     }
 }

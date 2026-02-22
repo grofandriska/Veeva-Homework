@@ -1,4 +1,4 @@
-package hu.grofandriska.veeva.service;
+package hu.grofandriska.veeva.service.vault;
 
 import hu.grofandriska.veeva.model.vault.VaultAuthResponse;
 
@@ -32,24 +32,21 @@ public class VaultAuthService {
 
     @Cacheable(value = "vaultSession", sync = true)
     public VaultAuthResponse authenticate() {
+        String body = "username=" + username + "&password=" + password;
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            headers.setAccept((List.of(MediaType.APPLICATION_JSON)));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setAccept((List.of(MediaType.APPLICATION_JSON)));
 
-            String body = "username=" + username + "&password=" + password;
             HttpEntity<String> request = new HttpEntity<>(body, headers);
-            //Map or Type for ResponseObject
             ResponseEntity<VaultAuthResponse> response = restTemplate.postForEntity(authURL, request, VaultAuthResponse.class);
 
             VaultAuthResponse responseBody = response.getBody();
-
 
             if (response.getStatusCode() == HttpStatus.OK && responseBody != null && responseBody.getSessionId() != null ) {
                 return responseBody;
             } else {
                 throw new RuntimeException("Vault auth failed: " + response.getStatusCode());
             }
-
     }
 }
