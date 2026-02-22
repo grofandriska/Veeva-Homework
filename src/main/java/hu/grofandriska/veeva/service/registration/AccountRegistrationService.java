@@ -26,7 +26,7 @@ public class AccountRegistrationService {
         this.URL = URL;
     }
 
-    public RegistrationServerResponse findEmail(String emailAddress, String sessionId) {
+    public RegistrationServerResponse finAccountByEmail(String emailAddress, String sessionId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", sessionId);
         headers.set("Bearer", sessionId);
