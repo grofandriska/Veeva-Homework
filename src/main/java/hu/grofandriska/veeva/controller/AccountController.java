@@ -2,9 +2,7 @@ package hu.grofandriska.veeva.controller;
 
 
 import hu.grofandriska.veeva.model.account.Lead;
-import hu.grofandriska.veeva.model.registration.AccountRegistrationResponse;
 import hu.grofandriska.veeva.model.registration.RegistrationResult;
-import hu.grofandriska.veeva.model.registration.VaultResponse;
 import hu.grofandriska.veeva.model.vault.VaultAuthResponse;
 import hu.grofandriska.veeva.model.vault.VaultIdResponse;
 import hu.grofandriska.veeva.service.registration.AccountRegistrationService;
