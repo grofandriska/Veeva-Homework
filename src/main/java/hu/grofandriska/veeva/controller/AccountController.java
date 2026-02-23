@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    private static final Logger log = LoggerFactory.getLogger(AccountController.class);
     private final VaultAuthService vaultAuthService;
     private final AccountRegistrationService accountRegistrationService;
 

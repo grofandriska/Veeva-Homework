@@ -3,10 +3,7 @@ package hu.grofandriska.veeva.service.vql;
 import hu.grofandriska.veeva.model.account.Lead;
 import hu.grofandriska.veeva.model.registration.RegistrationServerResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -33,7 +30,7 @@ public class VQLService {
         headers.set("Authorization", sessionId);
         headers.set("Bearer", sessionId);
         headers.set("X-VaultAPI-DescribeQuery", "true");
-        headers.setAccept((List.of(MediaType.APPLICATION_JSON)));
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -42,7 +39,13 @@ public class VQLService {
         body.add("q", sql);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
-        return objectMapper.readValue(response.getBody(), RegistrationServerResponse.class);
+        ResponseEntity<RegistrationServerResponse> response = restTemplate.exchange(
+                        url,
+                        HttpMethod.POST,
+                        request,
+                        RegistrationServerResponse.class
+                );
+
+        return response.getBody();
     }
 }
