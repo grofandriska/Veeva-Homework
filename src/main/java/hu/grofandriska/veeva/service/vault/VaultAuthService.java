@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 
-
 @Service
 public class VaultAuthService {
 
@@ -38,15 +37,15 @@ public class VaultAuthService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setAccept((List.of(MediaType.APPLICATION_JSON)));
 
-            HttpEntity<String> request = new HttpEntity<>(body, headers);
-            ResponseEntity<VaultAuthResponse> response = restTemplate.postForEntity(authURL, request, VaultAuthResponse.class);
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+        ResponseEntity<VaultAuthResponse> response = restTemplate.postForEntity(authURL, request, VaultAuthResponse.class);
 
-            VaultAuthResponse responseBody = response.getBody();
+        VaultAuthResponse responseBody = response.getBody();
 
-            if (response.getStatusCode() == HttpStatus.OK && responseBody != null && responseBody.getSessionId() != null ) {
-                return responseBody;
-            } else {
-                throw new RuntimeException("Vault auth failed: " + response.getStatusCode());
-            }
+        if (response.getStatusCode() == HttpStatus.OK && responseBody != null && responseBody.getSessionId() != null) {
+            return responseBody;
+        } else {
+            throw new RuntimeException("Vault auth failed: " + response.getStatusCode());
+        }
     }
 }

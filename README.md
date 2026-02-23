@@ -11,10 +11,10 @@ Request:
   "first_name__c" : "Harry",
   "last_name__c" :"Potter" ,
   "email__c" : "harryPotter@example.com"
-- }
+  }
 
 Response:
 - BODY {
-- "statusCode" : "200", 
-- "vaultId" : "4482"
-- }
+  "statusCode" : "200",
+  "vaultId" : "4482"
+  }
