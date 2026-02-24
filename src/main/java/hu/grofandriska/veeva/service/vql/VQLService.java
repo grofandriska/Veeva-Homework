@@ -8,21 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import tools.jackson.databind.ObjectMapper;
-
 import java.util.List;
 
 @Service
 public class VQLService {
-
     private final String url;
     private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
 
-    public VQLService(@Value("${vql.url}") String url, RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public VQLService(@Value("${vql.url}") String url, RestTemplate restTemplate) {
         this.url = url;
         this.restTemplate = restTemplate;
-        this.objectMapper = objectMapper;
     }
 
     public RegistrationServerResponse findAccountByEmail(Lead lead, String sessionId) {

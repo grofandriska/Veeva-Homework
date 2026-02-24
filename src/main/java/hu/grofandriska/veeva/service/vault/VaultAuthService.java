@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -31,13 +33,15 @@ public class VaultAuthService {
 
     @Cacheable(value = "vaultSession", sync = true)
     public VaultAuthResponse authenticate() {
-        String body = "username=" + username + "&password=" + password;
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setAccept((List.of(MediaType.APPLICATION_JSON)));
 
-        HttpEntity<String> request = new HttpEntity<>(body, headers);
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("username", username);
+        body.add("password", password);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<VaultAuthResponse> response = restTemplate.postForEntity(authURL, request, VaultAuthResponse.class);
 
         VaultAuthResponse responseBody = response.getBody();
